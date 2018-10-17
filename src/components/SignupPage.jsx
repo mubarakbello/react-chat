@@ -32,7 +32,7 @@ class SignupPage extends Component {
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(res => {
         console.log(res)
-        firebase.database().ref('users/' + res.user.uid).set({username})
+        firebase.database().ref(`users/${res.user.uid}/profile-details`).set({username})
         this.props.changeAuthState()
       })
       .catch(err => {

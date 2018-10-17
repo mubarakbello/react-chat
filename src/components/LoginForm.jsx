@@ -41,7 +41,7 @@ class LoginForm extends Component {
             <input
               type="text"
               value={this.state.username}
-              placeholder='Username or email'
+              placeholder='Email'
               onChange={() => this.handleChange(this.usernameRef)}
               ref={this.usernameRef}
             />

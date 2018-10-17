@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Loading = () => (
+const Loading = (props) => (
   <div className="loading">
-    <span>Loading...</span>
+    <span>{props.text} Loading...</span>
   </div>
 )
 

@@ -24,9 +24,9 @@ class HomeContainer extends Component {
         </div>
         <Switch>
           <Route exact path="/" component={Timeline} />
-          <Route exact path="/messages" component={MessagesPage} />
           <Route exact path="/profile" component={ProfilePage} />
           <Route exact path="/followers" component={FollowersPage} />
+          <Route path="/messages" component={MessagesPage} />
         </Switch>
         <Footer />
       </div>
@@ -36,7 +36,7 @@ class HomeContainer extends Component {
 
 const Footer = () => (
   <div className="footer">
-    <span>&lt;Ehmbeey /&gt;</span>
+    <span>&lt;Ehmbeey /&gt; </span>
     <span>Copyright 2018</span>
   </div>
 )
