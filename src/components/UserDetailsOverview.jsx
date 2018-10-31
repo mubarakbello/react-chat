@@ -62,7 +62,7 @@ class UserDetailsOverview extends Component {
     return this.state.loading
       ? <Loading text="User Details" />
       : (
-      <div>
+      <div className="User-details-overview">
         <h3>{this.state.username}</h3>
         <p>Currently {this.state.active ? 'online' : 'offline'}</p>
       </div>

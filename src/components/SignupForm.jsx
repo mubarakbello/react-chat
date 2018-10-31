@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {Link} from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 class SignupForm extends Component {
@@ -14,8 +15,7 @@ class SignupForm extends Component {
       email: '',
       username: '',
       password: '',
-      passwordCheck: '',
-      isEqual: null
+      passwordCheck: ''
     }
   }
 
@@ -47,63 +47,163 @@ class SignupForm extends Component {
   handlePasswordCheck = (elementRef) => {
     this.setState({
       passwordCheck: elementRef.current.value
-    }, () => {})
+    }, () => {
+      this.setState({
+        isEqual: this.state.password === this.state.passwordCheck ? true : false
+      })
+    })
   }
 
   handleSubmit = (e) => {
     e.preventDefault()
-    if (this.state.password === this.state.passwordCheck) {
+    if (this.state.isEqual && this.state.email !== '' && this.state.username !== '') {
       this.props.handleSignUp(this.state)
+    } else {
+      this.setState({
+        usernameEmpty: this.state.username === '' ? true : false,
+        emailEmpty: this.state.email === '' ? true : false,
+        passwordEmpty: this.state.password === '' ? true : false
+      })
     }
   }
 
   render() {
-    if (this.state.isEqual !== null) {
-      // eslint-disable-next-line
-      let passwordCheckClassName = this.state.isEqual ? 'correct' : 'wrong'
+    let passwordCheckClassName = ''
+    if (this.state.isEqual !== undefined) {
+      passwordCheckClassName = this.state.isEqual && this.state.passwordCheck !== ''
+        ? 'is-valid' : 'is-invalid'
+    } else {
+      if (this.state.password !== '' && this.state.passwordCheck === '') {
+        passwordCheckClassName = 'is-invalid'
+      }
+    }
+    let usernameClassName = '', emailClassName = '', passwordClassName = ''
+    if (this.state.usernameEmpty !== undefined) {
+      usernameClassName = this.state.usernameEmpty ? 'is-invalid' : 'is-valid'
+    }
+    if (this.state.emailEmpty !== undefined) {
+      emailClassName = this.state.emailEmpty ? 'is-invalid' : 'is-valid'
+    }
+    if (this.state.passwordEmpty !== undefined) {
+      passwordClassName = this.state.passwordEmpty ? 'is-invalid' : 'is-valid'
     }
     return (
-      <div className="signup-form">
-        <h1>Sign up here</h1>
-        <form onSubmit={this.handleSubmit}>
-          <div>
-            <input
-              type='text'
-              value={this.state.username}
-              placeholder='Username'
-              onChange={() => this.handleChange(this.usernameRef)}
-              ref={this.usernameRef}
-            />
+      <div className="Signup-form">
+        <h3 className="text-center">Sign up to get an account</h3>
+        <form onSubmit={this.handleSubmit} noValidate>
+          <div className="form-group">
+            <label htmlFor="username">Username</label>
+            <div className="input-group">
+              <div className="input-group-prepend">
+                <span className="input-group-text" id="inputGroupPrepend3">$</span>
+              </div>
+              <input
+                type='text'
+                className={`form-control ${usernameClassName}`}
+                id="username"
+                placeholder='Enter a username'
+                aria-describedby="usernameHelp"
+                value={this.state.username}
+                onChange={() => this.handleChange(this.usernameRef)}
+                ref={this.usernameRef}
+              />
+              <div className="valid-feedback">
+                Looks good. Make sure it's valid though!
+              </div>
+              <div className="invalid-feedback">
+                Please enter a username.
+              </div>
+            </div>
+            <small id="usernameHelp" className="form-text text-muted">
+              Make sure to leave no space in between
+            </small>
           </div>
-          <div>
-            <input
-              type='text'
-              value={this.state.email}
-              placeholder='Email'
-              onChange={() => this.handleChange(this.emailRef)}
-              ref={this.emailRef}
-            />
+          <div className="form-group">
+            <label htmlFor="email">Email address</label>
+            <div className="input-group">
+              <div className="input-group-prepend">
+                <span className="input-group-text" id="inputGroupPrepend3">@</span>
+              </div>
+              <input
+                type='text'
+                className={`form-control ${emailClassName}`}
+                id="email"
+                placeholder='Enter a valid email'
+                aria-describedby="emailHelp"
+                value={this.state.email}
+                onChange={() => this.handleChange(this.emailRef)}
+                ref={this.emailRef}
+              />
+              <div className="valid-feedback">
+                Looks good. Make sure it's valid though!
+              </div>
+              <div className="invalid-feedback">
+                You need to enter a valid email.
+              </div>
+            </div>
+            <small id="emailHelp" className="form-text text-muted">
+              This email address will be unique to your account
+            </small>
           </div>
-          <div>
-            <input
-              type='password'
-              value={this.state.password}
-              placeholder='Password...'
-              onChange={() => this.handleChange(this.passwordRef)}
-              ref={this.passwordRef}
-            />
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <div className="input-group">
+              <div className="input-group-prepend">
+                <span className="input-group-text" id="inputGroupPrepend3">#</span>
+              </div>
+              <input
+                type='password'
+                className={`form-control ${passwordClassName}`}
+                id="password"
+                placeholder='Choose a password'
+                value={this.state.password}
+                onChange={() => this.handleChange(this.passwordRef)}
+                ref={this.passwordRef}
+              />
+              <div className="valid-feedback">
+                Looks good. Make sure it's strong enough though!
+              </div>
+              <div className="invalid-feedback">
+                This field shouldn't be left empty.
+              </div>
+            </div>
           </div>
-          <div>
-            <input
-              type='password'
-              value={this.state.passwordCheck}
-              placeholder='Retype password...'
-              onChange={() => this.handlePasswordCheck(this.passwordCheckRef)}
-              ref={this.passwordCheckRef}
-            />
+          <div className="form-group">
+            <label htmlFor="retypePassword">Retype password</label>
+            <div className="input-group">
+              <div className="input-group-prepend">
+                <span className="input-group-text" id="inputGroupPrepend3">#</span>
+              </div>
+              <input
+                type='password'
+                className={`form-control ${passwordCheckClassName}`}
+                id="retypePassword"
+                placeholder='Retype the password'
+                value={this.state.passwordCheck}
+                onChange={() => this.handlePasswordCheck(this.passwordCheckRef)}
+                ref={this.passwordCheckRef}
+              />
+              <div className="valid-feedback">
+                Looks good. Make sure it's strong enough though!
+              </div>
+              <div className="invalid-feedback">
+                Password must match the first one provided.
+              </div>
+            </div>
           </div>
-          <div>
-            <input type='submit' value='Sign Up' />
+          <div className="row justify-content-between">
+            <div className="col-4">
+              <button type="submit" className="btn btn-block btn-primary">Sign up</button>
+            </div>
+            <div className="col-4">
+              <Link
+                to="/login"
+                role="button"
+                className="btn btn-block btn-outline-primary"
+              >
+                Log In instead
+              </Link>
+            </div>
           </div>
         </form>
       </div>

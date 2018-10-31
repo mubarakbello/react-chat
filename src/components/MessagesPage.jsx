@@ -5,7 +5,7 @@ import MessagesContainer from './MessagesContainer'
 class MessagesPage extends Component {
   render() {
     return (
-      <div>
+      <div className="Messages-page">
         <ActiveFollowers />
         <MessagesContainer />
       </div>

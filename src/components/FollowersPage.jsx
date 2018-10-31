@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class FollowersPage extends Component {
   render() {
     return (
-      <div>This is the followers page</div>
+      <div className="Followers-page">This is the followers page</div>
     );
   }
 }

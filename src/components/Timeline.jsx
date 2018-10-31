@@ -32,7 +32,7 @@ class Timeline extends Component {
     return (
       <UserContext.Consumer>
         {user => (
-          <div>
+          <div className="Timeline">
             <p>Welcome {user.email} !</p>
             <CreateTimelinePost
               addNewTimelinePost={this.addNewTimelinePost}

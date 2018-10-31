@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import {Link} from 'react-router-dom'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import PropTypes from 'prop-types'
@@ -30,7 +29,6 @@ class LoginPage extends Component {
     this.loadingMode()
     firebase.auth().signInWithEmailAndPassword(username, password)
       .then(res => {
-        console.log(res)
         this.props.changeAuthState()
       })
       .catch(err => {
@@ -42,32 +40,29 @@ class LoginPage extends Component {
       })
   }
 
+  closeButtons = () => {
+    this.setState({loginError: false})
+  }
+
   render() {
-    const UserLoggedIn = () => (
-      <div className="user-logged-in">
-        <span>
-          You are already logged in. 
-          <Link to="/">Proceed to your account here</Link>
-        </span>
-      </div>
-    )
-    const ErrorLoggingIn = () => (
-      <div className="error-logging-in">
-        <span>Error logging you in. Try again</span>
+    const ErrorLoggingIn = (props) => (
+      <div className="Error-signing-in container alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Holy guacamole!</strong> Errors aren't welcomed, so check the details you entered or your network.
+        <button type="button" className="close" aria-label="Close">
+          <span aria-hidden="true" onClick={props.close}>&times;</span>
+        </button>
       </div>
     )
     return this.state.loading
-      ? <Loading />
+      ? <Loading text="Login Page" />
       : (
-      <div>
-        <h1>This is the login page</h1>
-        {this.props.authed && <UserLoggedIn />}
-        {this.state.loginError && <ErrorLoggingIn />}
-        <LoginForm handleLogin={this.handleLogin} />
-        <div>
-          <Link to="/signup">
-            <button className="btn btn-primary">Sign Up</button>
-          </Link>
+      <div className="container-fluid">
+        <div className="Login-page row justify-content-center">
+          <div className="col-md-8 col-sm-10 col-lg-6">
+            <h1 className="text-center">Chat Application</h1>
+            {this.state.loginError && <ErrorLoggingIn close={this.closeButtons} />}
+            <LoginForm handleLogin={this.handleLogin} />
+          </div>
         </div>
       </div>
     )

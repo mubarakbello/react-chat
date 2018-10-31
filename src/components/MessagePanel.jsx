@@ -38,9 +38,6 @@ class MessagePanel extends Component {
       ...eachMessage,
       'owner' : uid === this.props.friendId ? 'Friend' : 'Me'
     }))
-    // let nextMessagesState = this.state.messages.concat(newSnapshot).sort(function (a, b) {
-    //   return a.timestamp - b.timestamp;
-    // })
     let nextMessagesState =  this.uniqBy(this.state.messages.concat(newSnapshot), JSON.stringify).sort(function (a, b) {
       return a.timestamp - b.timestamp;
     })
@@ -103,7 +100,7 @@ class MessagePanel extends Component {
     return this.state.loading
       ? <Loading text="Messages" />
       : (
-        <div>
+        <div className="Message-panel">
           {MessagesToRender}
         </div>
       )

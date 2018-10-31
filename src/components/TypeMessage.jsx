@@ -31,7 +31,7 @@ class TypeMessage extends Component {
 
   render() {
     return (
-      <div>
+      <div className="Type-message">
         <form onSubmit={this.handleSubmit}>
           <div>
             <input

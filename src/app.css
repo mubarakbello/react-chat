@@ -1,3 +1,52 @@
-body {
+html, body {
   font-family: sans-serif;
+  height: 100%;
 }
+
+.Login-page {
+  padding-top: 20vh;
+}
+
+.Signup-page {
+  padding-top: 10vh;
+}
+
+.Navigation nav ul li a:hover {
+  text-decoration: none
+}
+
+.Navigation nav ul {
+  list-style-type: none;
+}
+
+.Navigation {
+  background-color: rgb(51, 51, 51);
+  height: 100vh;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  position: absolute;
+  width: 50px;
+}
+
+.Home-container {
+  bottom: 0px;
+  height: 100vh;
+  left: 0px;
+  position: relative;
+  right: 0px;
+  top: 0px;
+  width: 100vw;
+}
+
+/* Screen sizes above 768px(not mobile phones) */
+@media only screen and (min-width: 768px) {
+  /* styles */
+}
+
+/* Screen sizes above 600px(tablets) */
+@media only screen and (min-width: 600px) {
+  /* styles */
+}
+
+/* the rest outside are for mobile phones */

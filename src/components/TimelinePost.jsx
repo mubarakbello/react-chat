@@ -9,7 +9,7 @@ class TimelinePost extends Component {
 
   render() {
     return (
-      <div className="timeline-post">
+      <div className="Timeline-post">
         <Link to="#">
           <p>{this.props.postData.text}</p>
           {

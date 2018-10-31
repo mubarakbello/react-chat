@@ -33,22 +33,19 @@ class CreateTimelinePost extends Component {
 
   render() {
     return (
-      <div>
+      <div className="Create-timeline-post">
         <form onSubmit={this.handleSubmit}>
-          <div>
+          <div className="form-group">
             <textarea
+              className="form-control"
+              rows="3"
+              required
               value={this.state.value}
               placeholder="Post to your timeline..."
               onChange={this.handleChange}
             />
           </div>
-          <div>
-            <input
-              type="submit"
-              value="Post"
-              className="btn btn-success"
-            />
-          </div>
+          <button type="submit" className="btn btn-primary">Post</button>
         </form>
       </div>
     );

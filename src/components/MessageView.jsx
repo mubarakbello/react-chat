@@ -32,7 +32,7 @@ class MessageView extends Component {
 
   render() {
     return (
-      <div>
+      <div className="Message-view">
         <UserDetailsOverview friendId={this.props.friendId} />
         <MessagePanel
           user={this.props.user}

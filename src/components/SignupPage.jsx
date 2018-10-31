@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import {Link} from 'react-router-dom'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/database'
@@ -44,32 +43,29 @@ class SignupPage extends Component {
       })
   }
 
+  closeButtons = () => {
+    this.setState({signupError: false})
+  }
+
   render() {
-    // eslint-disable-next-line
-    const UserLoggedIn = () => (
-      <div className="user-logged-in">
-        <span>
-          You are already logged in. 
-          <Link to="/">Proceed to your account here</Link>
-        </span>
-      </div>
-    )
-    const ErrorSigningUp = () => (
-      <div className="error-signing-up">
-        <span>Error signing you up. Try again</span>
+    const ErrorSigningUp = (props) => (
+      <div className="Error-signing-up alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Holy guacamole!</strong> Try signing up again, errors aren't welcomed.
+        <button type="button" className="close" aria-label="Close">
+          <span aria-hidden="true" onClick={props.close}>&times;</span>
+        </button>
       </div>
     )
     return this.state.loading
-      ? <Loading />
+      ? <Loading text="Signup Page" />
       : (
-      <div>
-        <h1>This is the Signup page</h1>
-        {this.state.signupError && <ErrorSigningUp />}
-        <SignupForm handleSignUp={this.handleSignUp} />
-        <div>
-          <Link to="/login">
-            <button className="btn btn-primary">Log in</button>
-          </Link>
+      <div className="container-fluid">
+        <div className="Signup-page row justify-content-center">
+          <div className="col-md-8 col-sm-10 col-lg-6">
+            <h1 className="text-center">Chat Application</h1>
+            {this.state.signupError && <ErrorSigningUp close={this.closeButtons} />}
+            <SignupForm handleSignUp={this.handleSignUp} />
+          </div>
         </div>
       </div>
     )

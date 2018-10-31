@@ -14,29 +14,22 @@ class HomeContainer extends Component {
 
   render() {
     return (
-      <div>
-        <Navigation />
-        <div>
-          <button
-            onClick={this.props.handleLogout}
-            className="btn btn-danger"
-          >Log out</button>
-        </div>
+      <div className="Home-container">
+        <Navigation handleLogout={this.props.handleLogout}/>
         <Switch>
           <Route exact path="/" component={Timeline} />
           <Route exact path="/profile" component={ProfilePage} />
           <Route exact path="/followers" component={FollowersPage} />
           <Route path="/messages" component={MessagesPage} />
+          <Route render={() => <div>No match</div>} />
         </Switch>
-        <Footer />
       </div>
     )
   }
 }
 
 const Footer = () => (
-  <div className="footer">
-    <span>&lt;Ehmbeey /&gt; </span>
+  <div className="Footer">
     <span>Copyright 2018</span>
   </div>
 )

@@ -4,7 +4,7 @@ import {NavLink} from 'react-router-dom'
 class Navigation extends Component {
   render() {
     return (
-      <div>
+      <div className="Navigation d-flex flex-column">
         <nav>
           <ul>
             <li><NavLink to="/">Timeline</NavLink></li>
@@ -13,6 +13,12 @@ class Navigation extends Component {
             <li><NavLink to="/followers">Followers</NavLink></li>
           </ul>
         </nav>
+        <div>
+          <button
+            onClick={this.props.handleLogout}
+            className="btn btn-danger"
+          >Log out</button>
+        </div>
       </div>
     )
   }

@@ -1,6 +1,5 @@
 import React, { Component, createContext } from 'react'
-// eslint-disable-next-line
-import {Route, Switch} from 'react-router-dom'
+import {Switch} from 'react-router-dom'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import {PrivateRoute, PublicRoute} from './SpecialRoutes'
@@ -25,7 +24,6 @@ class AncestorComponent extends Component {
   changeAuthState = () => {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        console.log(user)
         this.setState(() => ({
           authed: true,
           loading: false,
@@ -51,15 +49,19 @@ class AncestorComponent extends Component {
   }
 
   componentDidMount() {
-    initializeFirebase()
+    // initializeFirebase()
     this.changeAuthState()
+  }
+
+  componentWillMount() {
+    initializeFirebase()
   }
 
   render() {
     return this.state.loading
-      ? <Loading />
+      ? <Loading text="Application" />
       : (
-      <div className="app">
+      <div className="App">
         <UserContext.Provider value={this.state.user}>
           <Switch>
             <PublicRoute
@@ -80,10 +82,6 @@ class AncestorComponent extends Component {
               component={HomeContainer}
               handleLogout={this.handleLogout}
             />
-            {/* <Route myName="Mubarak" render={(props) => {
-              console.log(props)
-              return (<h3>No Match</h3>)
-            }} /> */}
           </Switch>
         </UserContext.Provider>
       </div>

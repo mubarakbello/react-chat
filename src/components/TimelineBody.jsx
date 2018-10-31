@@ -55,7 +55,7 @@ class TimelineBody extends Component {
     return this.state.loading
       ? <Loading />
       : (
-        <div>
+        <div className="Timeline-body">
           {TimelinePosts}
         </div>
       )

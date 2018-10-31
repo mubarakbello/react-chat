@@ -7,7 +7,7 @@ import {UserContext} from './AncestorComponent'
 class MessagesContainer extends Component {
   render() {
     return (
-      <div>
+      <div className="Messages-container">
         <Switch>
           <Route exact path="/messages" component={RecentMessages} />
           <Route exact path="/messages/:friend_id" render={props => (
