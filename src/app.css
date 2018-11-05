@@ -1,6 +1,10 @@
-html, body {
+/* html, body {
   font-family: sans-serif;
   height: 100%;
+} */
+
+body {
+  font-family: 'Mali', cursive;
 }
 
 .Login-page {
@@ -19,34 +23,162 @@ html, body {
   list-style-type: none;
 }
 
-.Navigation {
-  background-color: rgb(51, 51, 51);
-  height: 100vh;
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
-  position: absolute;
-  width: 50px;
+.Loading-large, .Loading-medium {
+  align-items: center;
+  display: flex;
+  justify-content: center;
 }
 
-.Home-container {
-  bottom: 0px;
-  height: 100vh;
-  left: 0px;
-  position: relative;
-  right: 0px;
-  top: 0px;
+.Loading-large {
+  height: 90vh;
   width: 100vw;
 }
 
+.Loading-medium {
+  height: 100%;
+  width: 90%;
+}
+
+.Home-container {
+  /* height: 100vh; */
+  position: relative;
+}
+
+.container-header {
+  align-items: center;
+  background-color: #eee;
+  color: #111;
+  display: flex;
+  flex-direction: column;
+  height: 80px;
+  justify-content: center;
+  left: 0px;
+  min-height: 80px;
+  position: fixed;
+  right: 0px;
+  top: 0px;
+  z-index: 999;
+}
+
+.container-header h2 {
+  font-weight: bold;
+  font-size: 3em;
+  /* font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
+  letter-spacing: 20px;
+}
+
+.Navigation {
+  align-items: center;
+  background-color: #eee;
+  display: flex;
+  height: 50px;
+  justify-content: center;
+  left: 0px;
+  position: fixed;
+  top: 80px;
+  right: 0px;
+  z-index: 999;
+}
+
+nav > a {
+  padding: 20px;
+}
+
+.active {
+  color: #ff5252;
+}
+
+.active:hover {
+  text-decoration: none;
+}
+
+.Timeline, .Profile-page, .Messages-page, .Followers-page {
+  background-image: url('./assets/bg.jpg');
+  background-attachment: fixed;
+  background-size: cover;
+  min-height: calc(100vh - 130px);
+  padding: 5px 20vw;
+  position: relative;
+  top: 130px;
+  width: unset
+}
+
+/* Timeline styles */
+.timeline-greeting {
+  align-items: center;
+  background: linear-gradient(to right, #B7F8DB,#50A7C2);
+  border-radius: 0.2rem;
+  display: flex;
+  height: 55px;
+  justify-content: center;
+  margin: 15px 0px;
+  text-align: center;
+}
+
+.timeline-greeting span {
+  font-size: 30px;
+  background: -webkit-linear-gradient(left, orange , yellow, green, cyan, blue, violet);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.Timeline-post {
+  align-items: stretch;
+  background-color: #fff;
+  border-radius: 0.2rem;
+  display: flex;
+  margin-bottom: 15px;
+  padding: 5px;
+}
+
+.timeline-thumbnail {
+  align-items: center;
+  height: inherit;
+  justify-content: center;
+  width: 55px;
+}
+
+.timeline-content {
+  width: calc(100% - 55px);
+}
+
+.timeline-username > p{
+  color: #2b55ad;
+  cursor: pointer;
+}
+
+.timeline-text {
+  height: auto;
+}
+
+.timeline-date {
+  margin: 3px;
+}
+
+.Create-timeline-post {
+  margin-bottom: 30px;
+}
+
 /* Screen sizes above 768px(not mobile phones) */
-@media only screen and (min-width: 768px) {
-  /* styles */
+@media only screen and (max-width: 768px) {
+  .container-header h2 {
+    letter-spacing: 10px;
+  }
+
+  .Timeline, .Profile-page, .Messages-page, .Followers-page {
+    padding: 5px 10vw;
+  }
 }
 
 /* Screen sizes above 600px(tablets) */
-@media only screen and (min-width: 600px) {
-  /* styles */
+@media only screen and (max-width: 600px) {
+  /* .container-header h2 {
+    letter-spacing: 10px;
+  }
+
+  .Home-container {
+    padding: 0px 10vw;
+  } */
 }
 
 /* the rest outside are for mobile phones */

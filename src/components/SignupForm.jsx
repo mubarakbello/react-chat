@@ -50,19 +50,20 @@ class SignupForm extends Component {
     }, () => {
       this.setState({
         isEqual: this.state.password === this.state.passwordCheck ? true : false
-      })
+      }, () => console.log(`isEqual: ${this.state.isEqual}`))
     })
   }
 
   handleSubmit = (e) => {
     e.preventDefault()
-    if (this.state.isEqual && this.state.email !== '' && this.state.username !== '') {
+    if (this.state.password===this.state.passwordCheck && this.state.email !== '' && this.state.username !== '' && !this.state.username.includes(' ') && this.state.password.length > 5) {
       this.props.handleSignUp(this.state)
     } else {
       this.setState({
         usernameEmpty: this.state.username === '' ? true : false,
         emailEmpty: this.state.email === '' ? true : false,
-        passwordEmpty: this.state.password === '' ? true : false
+        passwordEmpty: this.state.password === '' ? true : false,
+        isEqual: this.state.password === this.state.passwordCheck
       })
     }
   }
@@ -79,7 +80,7 @@ class SignupForm extends Component {
     }
     let usernameClassName = '', emailClassName = '', passwordClassName = ''
     if (this.state.usernameEmpty !== undefined) {
-      usernameClassName = this.state.usernameEmpty ? 'is-invalid' : 'is-valid'
+      usernameClassName = this.state.usernameEmpty || this.state.username.includes(' ') ? 'is-invalid' : 'is-valid'
     }
     if (this.state.emailEmpty !== undefined) {
       emailClassName = this.state.emailEmpty ? 'is-invalid' : 'is-valid'
@@ -87,6 +88,7 @@ class SignupForm extends Component {
     if (this.state.passwordEmpty !== undefined) {
       passwordClassName = this.state.passwordEmpty ? 'is-invalid' : 'is-valid'
     }
+    if (this.state.password.length < 6 && this.state.isEqual !== undefined) passwordClassName = 'is-invalid'
     return (
       <div className="Signup-form">
         <h3 className="text-center">Sign up to get an account</h3>
@@ -111,7 +113,7 @@ class SignupForm extends Component {
                 Looks good. Make sure it's valid though!
               </div>
               <div className="invalid-feedback">
-                Please enter a username.
+                Please choose a username with no spaces in between.
               </div>
             </div>
             <small id="usernameHelp" className="form-text text-muted">
@@ -164,7 +166,7 @@ class SignupForm extends Component {
                 Looks good. Make sure it's strong enough though!
               </div>
               <div className="invalid-feedback">
-                This field shouldn't be left empty.
+                This field must contain 6 or more characters.
               </div>
             </div>
           </div>

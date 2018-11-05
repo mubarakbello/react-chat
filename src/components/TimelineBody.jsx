@@ -10,7 +10,7 @@ class TimelineBody extends Component {
     super(props)
     this.state = {
       loading: true,
-      timelinePostData: []
+      timelinePostData: {}
     }
   }
 
@@ -18,42 +18,73 @@ class TimelineBody extends Component {
     user: PropTypes.object
   }
 
-  parseReceivedPosts = (timelinePostsSnapshot) => {
-    let PostsObject
-    if (timelinePostsSnapshot !== {} && timelinePostsSnapshot !== null) {
-      PostsObject = Object.keys(timelinePostsSnapshot).map(postIndex => (
-        timelinePostsSnapshot[postIndex]
+  parseReceivedList = (followersListSnapshot) => {
+    let followersIdList = []
+    if (followersListSnapshot !== {} && followersListSnapshot !== null) {
+      followersIdList = Object.keys(followersListSnapshot).map(postIndex => (
+        followersListSnapshot[postIndex]
       ))
-    } else {
-      PostsObject = [{
-        text: 'No timeline posts available. Try posting one now!',
-        timestamp: 1
-      }]
     }
-    this.setState(() => ({
-      timelinePostData: PostsObject.reverse(),
-      loading: false
-    }))
+    followersIdList.push({
+      uid: this.props.user.uid,
+      username: 'Posted by you'
+    })
+    // get timeline posts for each user in d list
+    // and set refs on them for changes
+    // store each
+    this.followersTimelinePostsRef = []
+    for(let followerId of followersIdList) {
+      const followerRef = firebase.database().ref(`/users/${followerId.uid}/timeline-posts`)
+      this.followersTimelinePostsRef.push(followerRef)
+      followerRef.on('value', snapshot => {
+        this.parseReceivedPosts(followerId, snapshot.val())
+      })
+    }
+  }
+
+  parseReceivedPosts = ({uid, username}, snapshot) => {
+    if (snapshot !== null) {
+      // parse the posts into an array of objects and add username entry to each post
+      snapshot = Object.keys(snapshot).map(e => ({...snapshot[e], username}))
+      // create deep copy of state.timelinePostData
+      const nextState = {...this.state.timelinePostData}
+      // update or create as necessary
+      nextState[uid] = snapshot
+      //update state
+      this.setState(() => ({
+        timelinePostData: nextState,
+        loading: false
+      }))
+    }
   }
 
   componentDidMount() {
     const user = this.props.user
-    this.timelinePostsChangesRef = firebase.database().ref(`/users/${user.uid}/timeline-posts`)
-    this.timelinePostsChangesRef.on('value', (snapshot) => {
-      this.parseReceivedPosts(snapshot.val() || {})
+    this.followersListChangesRef = firebase.database().ref(`/users/${user.uid}/followers`)
+    this.followersListChangesRef.on('value', (snapshot) => {
+      this.parseReceivedList(snapshot.val() || {})
     })
   }
 
   componentWillUnmount() {
-    this.timelinePostsChangesRef.off()
+    this.followersListChangesRef.off()
+    for(let followerRef of this.followersTimelinePostsRef) {
+      followerRef.off()
+    }
   }
 
   render() {
-    const TimelinePosts = this.state.timelinePostData.map(timelinePost => (
-      <TimelinePost key={timelinePost.timestamp} postData={timelinePost} />
+    let Posts = []
+    const dataKeys = Object.keys(this.state.timelinePostData)
+    for (const uid of dataKeys) {
+      Posts = [...Posts, ...this.state.timelinePostData[uid]]
+    }
+    Posts = Posts.sort((a, b) => a.timestamp - b.timestamp)
+    const TimelinePosts = Posts.reverse().map(Post => (
+      <TimelinePost key={Post.timestamp} postData={Post} />
     ))
     return this.state.loading
-      ? <Loading />
+      ? <Loading size="medium" />
       : (
         <div className="Timeline-body">
           {TimelinePosts}

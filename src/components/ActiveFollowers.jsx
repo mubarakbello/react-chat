@@ -1,19 +1,25 @@
 import React, { Component } from 'react'
-import {Link} from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 import firebase from 'firebase/app'
 import 'firebase/database'
+import PropTypes from 'prop-types'
 import Loading from './Loading'
 
 class ActiveFollowers extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      users: [],
+      followers: [],
       loading: true
     }
   }
 
-  getActiveFollowersFromDb =() => {
+  static propTypes = {
+    user: PropTypes.object
+  }
+
+  getActiveFollowersFromDb = () => {
+    const user = this.props.user
     this.followersListChangesRef = firebase.database().ref(`/users/${user.uid}/followers`)
     this.followersListChangesRef.on('value', (snapshot) => {
       this.formatActiveFollowersObject(snapshot.val() || {})
@@ -29,7 +35,7 @@ class ActiveFollowers extends Component {
     }
     this.setState(() => ({
       loading: false,
-      users: ActiveFollowersArray
+      followers: ActiveFollowersArray
     }))
   }
 
@@ -44,14 +50,14 @@ class ActiveFollowers extends Component {
   render() {
     let FollowersListToRender = 'No followers yet'
     if (!this.state.loading) {
-      if (this.state.users.length !== 0) {
-        FollowersListToRender = this.state.users.map(eachFollower => (
-          <Link
+      if (this.state.followers.length !== 0) {
+        FollowersListToRender = this.state.followers.map(eachFollower => (
+          <NavLink
             key={eachFollower.uid}
             to={`/messages/${eachFollower.uid}`}
           >
             {eachFollower.username}
-          </Link>
+          </NavLink>
         ))
       }
     }
@@ -60,13 +66,9 @@ class ActiveFollowers extends Component {
       : (
       <div className="Active-followers">
         <div className="recent-messages">
-          <Link to="/messages">Recent Messages</Link>
+          <NavLink to="/messages">Recent Messages</NavLink>
         </div>
         <div className="online">
-          {/* <Link to="/messages/QLrJlaTXtYPT9LKTKTPdzqoHxJv2">Mubarak</Link>
-          <Link to="/messages/BD9lHL0fYnPCIfMqUmWuwRU9Sf73">Divine</Link>
-          <Link to="/messages/reazM4601zT4ZfpliFnKhsvpvEC2">Elseagle</Link>
-          <Link to="/messages/user4">User ade 4</Link> */}
           {FollowersListToRender}
         </div>
       </div>

@@ -24,11 +24,14 @@ class AncestorComponent extends Component {
   changeAuthState = () => {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        this.setState(() => ({
-          authed: true,
-          loading: false,
-          user
-        }))
+        // get username and append to user object
+        firebase.database().ref(`/users/${user.uid}/profile-details/username`).once('value').then(snapshot => {
+          this.setState(() => ({
+            authed: true,
+            loading: false,
+            user: {...user, username: snapshot.val()}
+          }))
+        })
       } else {
         this.setState(() => ({
           authed: false,
@@ -54,12 +57,13 @@ class AncestorComponent extends Component {
   }
 
   componentWillMount() {
+    // initializeFirebase()
     initializeFirebase()
   }
 
   render() {
     return this.state.loading
-      ? <Loading text="Application" />
+      ? <Loading size="large" />
       : (
       <div className="App">
         <UserContext.Provider value={this.state.user}>

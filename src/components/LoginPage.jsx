@@ -54,7 +54,7 @@ class LoginPage extends Component {
       </div>
     )
     return this.state.loading
-      ? <Loading text="Login Page" />
+      ? <Loading size="large" />
       : (
       <div className="container-fluid">
         <div className="Login-page row justify-content-center">

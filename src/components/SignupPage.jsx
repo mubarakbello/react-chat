@@ -32,6 +32,10 @@ class SignupPage extends Component {
       .then(res => {
         console.log(res)
         firebase.database().ref(`users/${res.user.uid}/profile-details`).set({username})
+        firebase.database().ref(`users-list/${res.user.uid}`).set({
+          uid: res.user.uid,
+          username
+        })
         this.props.changeAuthState()
       })
       .catch(err => {
@@ -57,7 +61,7 @@ class SignupPage extends Component {
       </div>
     )
     return this.state.loading
-      ? <Loading text="Signup Page" />
+      ? <Loading size="large" />
       : (
       <div className="container-fluid">
         <div className="Signup-page row justify-content-center">

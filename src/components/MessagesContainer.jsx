@@ -1,21 +1,24 @@
 import React, { Component } from 'react'
 import {Switch, Route} from 'react-router-dom'
+import PropTypes from 'prop-types'
 import RecentMessages from './RecentMessages'
 import MessageView from './MessageView'
-import {UserContext} from './AncestorComponent'
 
 class MessagesContainer extends Component {
+  static propTypes = {
+    user: PropTypes.object
+  }
+
   render() {
+    const user = this.props.user
     return (
       <div className="Messages-container">
         <Switch>
-          <Route exact path="/messages" component={RecentMessages} />
+          <Route exact path="/messages" render={props => (
+            <RecentMessages user={user} {...props} />
+          )} />
           <Route exact path="/messages/:friend_id" render={props => (
-            <UserContext.Consumer>
-              {value => (
-                <MessageView user={value} friendId={props.match.params.friend_id} />
-              )}
-            </UserContext.Consumer>
+            <MessageView user={user} friendId={props.match.params.friend_id} />
           )} />
         </Switch>
       </div>

@@ -23,17 +23,23 @@ class MessageView extends Component {
     updates[`/${messages_hook}/${newMessageKey}`] = messageData
     firebase.database().ref().update(updates)
       .then(res => {
-        console.log('Done')
+        // console.log('Done')
+        // pass
       })
       .catch(err => {
         console.log(err)
       })
+    firebase.database().ref(`/users/${this.props.user.uid}/recent-messages/${this.props.friendId}`).set({...messageData, s: 'y'})
+    firebase.database().ref(`/users/${this.props.friendId}/recent-messages/${this.props.user.uid}`).set({...messageData, s: 'f'})
   }
 
   render() {
     return (
       <div className="Message-view">
-        <UserDetailsOverview friendId={this.props.friendId} />
+        <UserDetailsOverview
+          user={this.props.user}
+          friendId={this.props.friendId}
+        />
         <MessagePanel
           user={this.props.user}
           friendId={this.props.friendId}

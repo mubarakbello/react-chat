@@ -17,7 +17,8 @@ class Timeline extends Component {
     updates[`/${posts_hook}/${newPostKey}`] = postData
     firebase.database().ref().update(updates)
       .then(res => {
-        console.log('Done')
+        // console.log('Done')
+        // pass
       })
       .catch(err => {
         console.log(err)
@@ -33,11 +34,13 @@ class Timeline extends Component {
       <UserContext.Consumer>
         {user => (
           <div className="Timeline">
-            <p>Welcome {user.email} !</p>
+            <div className="timeline-greeting">
+              <span>Hi {user.username} !!!</span>
+            </div>
             <CreateTimelinePost
               addNewTimelinePost={this.addNewTimelinePost}
             />
-            <TimelineBody user={this.user || user} />
+            <TimelineBody user={user} />
           </div>
         )}
       </UserContext.Consumer>
