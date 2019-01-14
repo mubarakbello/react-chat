@@ -32,6 +32,13 @@ class AncestorComponent extends Component {
             user: {...user, username: snapshot.val()}
           }))
         })
+        const presenceRef = firebase.database().ref(`/users/${user.uid}/profile-details/active`)
+        firebase.database().ref('/.info/connected').on('value', function(snapshot) {
+          if (snapshot.val()) {
+            presenceRef.onDisconnect().set(false)
+            presenceRef.set(true)
+          }
+        })
       } else {
         this.setState(() => ({
           authed: false,
@@ -59,6 +66,18 @@ class AncestorComponent extends Component {
   componentWillMount() {
     // initializeFirebase()
     initializeFirebase()
+  }
+
+  componentWillUnmount() {
+    if (this.state.user !== null) {
+      const presenceRef = firebase.database().ref(`/users/${this.state.user.uid}/profile-details/active`)
+      firebase.database().ref('/.info/connected').on('value', function(snapshot) {
+        if (snapshot.val()) {
+          presenceRef.onDisconnect().set(false)
+          presenceRef.set(true)
+        }
+      })
+    }
   }
 
   render() {

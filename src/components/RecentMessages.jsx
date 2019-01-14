@@ -73,7 +73,7 @@ class RecentMessages extends Component {
       ))
     }
     return this.state.loading
-      ? <Loading text="Message Previews" />
+      ? <div className="Recent-messages"><Loading size="medium" text="recent messages" /></div>
       : (
         <div className="Recent-messages">
           {MessagePreviews}

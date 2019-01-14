@@ -4,12 +4,26 @@ import 'firebase/database'
 import PropTypes from 'prop-types'
 import Loading from './Loading'
 
-const SingleMessage = (props) => (
-  <div>
-    <p>{props.messageDetails.owner} -- {props.messageDetails.text}</p>
-    <small>{new Date(props.messageDetails.timestamp).toUTCString()}</small>
-  </div>
-)
+
+class SingleMessage extends Component {
+  render() {
+    const messageDetails = this.props.messageDetails
+    return (
+      <div
+        id={messageDetails.last && 'last'}
+        className={messageDetails.owner === 'Me' ? 'outgoing-message' : 'incoming-message'}
+      >
+        <p style={{marginBottom: '0px'}}>{messageDetails.text}</p>
+        <small
+          style={messageDetails.owner === 'Me' ? {float: 'right', fontSize: 'x-small'}:{fontSize: 'x-small'}}
+        >
+          {new Date(messageDetails.timestamp).toUTCString()}
+        </small>
+      </div>
+    )
+  }
+}
+
 
 class MessagePanel extends Component {
   constructor(props) {
@@ -75,12 +89,15 @@ class MessagePanel extends Component {
     this.handleChanges()
   }
 
-  componentDidUpdate = (prevProps, prevState) => {
-    if (this.props !== prevProps) {
+  componentDidUpdate = (prevprops, prevState) => {
+    if (this.props !== prevprops) {
       if (this.userMessagesChangesRef) this.userMessagesChangesRef.off()
       if (this.friendMessagesChangesRef) this.friendMessagesChangesRef.off()
       this.setState({messages: [], loading: true})
       this.handleChanges()
+    }
+    if (!!document.getElementById('last')) {
+      document.getElementById('last').scrollIntoView({block: 'end', behavior: 'instant'})
     }
   }
   
@@ -93,12 +110,14 @@ class MessagePanel extends Component {
   render() {
     let MessagesToRender = ''
     if (!this.state.loading) {
-      MessagesToRender = this.state.messages.map(eachMessage => (
+      const tempMessages = [...this.state.messages]
+      tempMessages[tempMessages.length-1] = {...tempMessages[tempMessages.length-1], last: true}
+      MessagesToRender = tempMessages.map(eachMessage => (
         <SingleMessage key={eachMessage.timestamp} messageDetails={eachMessage} />
       ))
     }
     return this.state.loading
-      ? <Loading text="Messages" />
+      ? <div className="Message-panel"><Loading size="medium" text="messages" /></div>
       : (
         <div className="Message-panel">
           {MessagesToRender}

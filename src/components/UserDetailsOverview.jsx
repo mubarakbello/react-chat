@@ -20,11 +20,9 @@ class UserDetailsOverview extends Component {
   }
 
   noticeChanges = () => {
-    // eslint-disable-next-line
-    const user = this.props.user
     this.friendStatusChangesRef = firebase.database().ref(`/users/${this.props.friendId}/profile-details`)
     this.friendStatusChangesRef.on('value', (snapshot) => {
-      this.parseReceivedStatusDetails(snapshot.val() || {})
+      this.parseReceivedStatusDetails(snapshot.val())
     })
   }
 
@@ -52,19 +50,19 @@ class UserDetailsOverview extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {}
+  componentWillReceiveprops(nextprops) {}
 
   componentWillUnmount() {
-    this.friendStatusChangesRef.off()
+    if (this.friendStatusChangesRef) this.friendStatusChangesRef.off()
   }
 
   render() {
     return this.state.loading
-      ? <Loading text="User Details" />
+      ? <div className="User-details-overview"><Loading size="small" text="follower status" /></div>
       : (
       <div className="User-details-overview">
         <h3>{this.state.username}</h3>
-        <p>Currently {this.state.active ? 'online' : 'offline'}</p>
+        <p>{this.state.active ? 'Online' : 'Offline'}</p>
       </div>
     )
   }

@@ -32,17 +32,18 @@ class TypeMessage extends Component {
   render() {
     return (
       <div className="Type-message">
-        <form onSubmit={this.handleSubmit}>
-          <div>
+        <form onSubmit={this.handleSubmit} style={{display:'flex'}}>
+          <div style={{width:'85%'}}>
             <input
+              className="form-control"
               type="text"
+              placeholder="Type a message..."
+              autoFocus
               value={this.state.message}
               onChange={this.handleChange}
             />
           </div>
-          <div>
-            <button type="submit">Submit</button>
-          </div>
+          <button style={{width:'15%'}} className="btn btn-primary" type="submit">Send</button>
         </form>
       </div>
     )

@@ -87,16 +87,10 @@ class FollowersPage extends Component {
       uid,
       username
     })
-      .then(() => {
-        console.log('Done following')
-      })
     firebase.database().ref(`users/${uid}/followers/${this.props.user.uid}`).set({
       uid: this.props.user.uid,
       username: this.props.user.username
     })
-      .then(() => {
-        console.log('Done adding to following of user')
-      })
   }
 
   handleUnfollow = ({uid}) => {

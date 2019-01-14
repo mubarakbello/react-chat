@@ -2,20 +2,44 @@
   font-family: sans-serif;
   height: 100%;
 } */
+div>textarea:focus ~ p {
+  display: block;
+}
 
 body {
   font-family: 'Mali', cursive;
 }
 
+p {
+  word-break: break-word;
+}
+
 .Login-page {
   padding-top: 20vh;
+  padding-bottom: 20vh;
 }
 
 .Signup-page {
   padding-top: 10vh;
+  padding-bottom: 10vh;
 }
 
-.Navigation nav ul li a:hover {
+/* Navigation bar styles */
+.Navigation {
+  align-items: center;
+  background-color: #eee;
+  display: flex;
+  height: 50px;
+  justify-content: center;
+  left: 0px;
+  position: fixed;
+  top: 80px;
+  right: 0px;
+  z-index: 999;
+}
+
+.Navigation div nav a:hover {
+  color: #ff5252;
   text-decoration: none
 }
 
@@ -23,21 +47,33 @@ body {
   list-style-type: none;
 }
 
-.Loading-large, .Loading-medium {
+nav > a {
+  padding: 20px;
+}
+/* End of navigation bar styles */
+
+/* Loading component styles */
+.Loading-large, .Loading-medium, .Loading-small {
   align-items: center;
   display: flex;
   justify-content: center;
 }
 
 .Loading-large {
-  height: 90vh;
+  background: #eee;
+  height: 100vh;
   width: 100vw;
 }
 
 .Loading-medium {
   height: 100%;
-  width: 90%;
+  width: 100%;
 }
+
+.Loading-small {
+  font: small-caption;
+}
+/* End of Loading component styles */
 
 .Home-container {
   /* height: 100vh; */
@@ -63,38 +99,22 @@ body {
 .container-header h2 {
   font-weight: bold;
   font-size: 3em;
-  /* font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
   letter-spacing: 20px;
 }
 
-.Navigation {
-  align-items: center;
-  background-color: #eee;
-  display: flex;
-  height: 50px;
-  justify-content: center;
-  left: 0px;
-  position: fixed;
-  top: 80px;
-  right: 0px;
-  z-index: 999;
-}
-
-nav > a {
-  padding: 20px;
-}
-
-.active {
+nav .active {
   color: #ff5252;
 }
 
-.active:hover {
+nav .active:hover {
   text-decoration: none;
 }
 
 .Timeline, .Profile-page, .Messages-page, .Followers-page {
   background-image: url('./assets/bg.jpg');
   background-attachment: fixed;
+  background-position: center center;
+  background-repeat: no-repeat;
   background-size: cover;
   min-height: calc(100vh - 130px);
   padding: 5px 20vw;
@@ -107,7 +127,7 @@ nav > a {
 .timeline-greeting {
   align-items: center;
   background: linear-gradient(to right, #B7F8DB,#50A7C2);
-  border-radius: 0.2rem;
+  border-radius: 0.6rem;
   display: flex;
   height: 55px;
   justify-content: center;
@@ -116,48 +136,179 @@ nav > a {
 }
 
 .timeline-greeting span {
-  font-size: 30px;
   background: -webkit-linear-gradient(left, orange , yellow, green, cyan, blue, violet);
+  background-clip: text;
+  font-size: 30px;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.Timeline-post {
+.Timeline-post, .Message-preview a {
   align-items: stretch;
   background-color: #fff;
-  border-radius: 0.2rem;
+  border-radius: 0.6rem;
+  box-shadow: 0 4px 8px 0 rgba(255,255,255,0.6);
   display: flex;
   margin-bottom: 15px;
   padding: 5px;
+  text-decoration: none;
+  transition: 0.3s;
 }
 
-.timeline-thumbnail {
+.Timeline-post:hover, .Message-preview a:hover {
+  box-shadow: 2px 4px 18px 5px rgba(255,255,255,0.6);
+}
+
+.timeline-thumbnail, .preview-thumbnail {
   align-items: center;
   height: inherit;
   justify-content: center;
   width: 55px;
 }
 
-.timeline-content {
+.timeline-content, .preview-content {
   width: calc(100% - 55px);
 }
 
-.timeline-username > p{
+.timeline-username > p, .preview-username > p {
   color: #2b55ad;
   cursor: pointer;
 }
 
-.timeline-text {
+.timeline-text, .preview-text {
+  color: #212529;
   height: auto;
 }
 
-.timeline-date {
+.timeline-date, .preview-date {
   margin: 3px;
 }
 
 .Create-timeline-post {
   margin-bottom: 30px;
 }
+/* End of timeline styles */
+
+/* Messages page styles */
+.Messages-page {
+  padding: 5px 15vw;
+}
+
+.Active-followers {
+  background: #fff;
+  border-radius: 0.3rem;
+  color: #50A7C2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100px;
+  min-width: 200px;
+  opacity: 0.9;
+  position: fixed;
+  width: 200px;
+}
+
+.Active-followers a {
+  margin-bottom: 5px;
+  padding: 5px;
+}
+
+.Active-followers a:hover {
+  border-left: 2px solid #50A7C2;
+  text-decoration: none;
+}
+
+.Active-followers .recent-messages {
+  margin: 10px 0px;
+}
+
+.Active-followers .active, .Active-followers a.active:hover {
+  background: #ddd;
+  border-left: 4px solid #50A7C2;
+}
+
+.Active-followers .online {
+  display: flex;
+  flex-direction: column;
+}
+
+.Recent-messages {
+  position: relative;
+  left: 220px;
+  width: calc(70vw - 220px);
+}
+
+.User-details-overview, .Message-panel, .Type-message {
+  position: fixed;
+  left: calc(220px + 15vw);
+  right: 15vw;
+}
+
+.User-details-overview {
+  background: #eee;
+  border-radius: 0.3rem;
+  height: 70px;
+  padding: 5px;
+}
+
+.Message-panel {
+  background-color: #ECE5DD;
+  background-image: url('./assets/bg.png');
+  border: 1px solid #eee;
+  border-radius: 0.2rem;
+  display: inline-flex;
+  flex-direction: column;
+  height: calc(100vh - 250px);
+  padding: 3px;
+  overflow-y: scroll;
+  top: 210px;
+}
+
+.my-custom-form {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.Type-message {
+  bottom: 0px;
+  height: calc(2.25rem + 2px);
+  max-height: 60px;
+  position: fixed;
+}
+
+.incoming-message, .outgoing-message {
+  height: fit-content;
+  margin-bottom: 5px;
+  max-width: 60%;
+  padding: 5px;
+  position: relative;
+  width: fit-content;
+}
+
+.temp {
+  position: relative;
+}
+
+.incoming-message {
+  background: rgba(52,58,64,.6);
+  border-top-right-radius: 0.6rem;
+  border-bottom-left-radius: 0.6rem;
+  border-bottom-right-radius: 0.6rem;
+  color: #fff;
+  left: 0px;
+}
+
+.outgoing-message {
+  background: rgba(255,255,255,0.8);
+  border-top-left-radius: 0.6rem;
+  border-bottom-left-radius: 0.6rem;
+  border-bottom-right-radius: 0.6rem;
+  color: #111;
+  margin-left: auto;
+  right: 0;
+}
+/* End of Messages page styles */
+
 
 /* Screen sizes above 768px(not mobile phones) */
 @media only screen and (max-width: 768px) {
@@ -168,17 +319,49 @@ nav > a {
   .Timeline, .Profile-page, .Messages-page, .Followers-page {
     padding: 5px 10vw;
   }
+
+  nav > a {
+    padding: 20px;
+  }
 }
 
 /* Screen sizes above 600px(tablets) */
 @media only screen and (max-width: 600px) {
-  /* .container-header h2 {
-    letter-spacing: 10px;
+  body {
+    font-size: small
   }
 
-  .Home-container {
-    padding: 0px 10vw;
-  } */
+  .container-header {
+    height: 50px;
+    min-height: 50px;
+  }
+
+  .container-header h2 {
+    font-weight: bold;
+    font-size: 2em;
+    letter-spacing: 7px;
+    text-align: center;
+  }
+
+  .Navigation {
+    height: 40px;
+    top: 50px;
+  }
+
+  .Timeline, .Profile-page, .Messages-page, .Followers-page {
+    min-height: calc(100vh - 90px);
+    padding: 5px 8vw;
+    top: 90px;
+  }
+
+  .my-btnn {
+    font-size: small;
+    padding: 6px;
+  }
+
+  nav > a {
+    padding: 8px;
+  }
 }
 
 /* the rest outside are for mobile phones */

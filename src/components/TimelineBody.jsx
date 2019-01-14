@@ -67,9 +67,11 @@ class TimelineBody extends Component {
   }
 
   componentWillUnmount() {
-    this.followersListChangesRef.off()
-    for(let followerRef of this.followersTimelinePostsRef) {
-      followerRef.off()
+    if (this.followersListChangesRef) {
+      this.followersListChangesRef.off()
+      for(let followerRef of this.followersTimelinePostsRef) {
+        followerRef.off()
+      }
     }
   }
 

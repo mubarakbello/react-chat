@@ -92,6 +92,7 @@ class SignupForm extends Component {
     return (
       <div className="Signup-form">
         <h3 className="text-center">Sign up to get an account</h3>
+        <small className="text-center">You can sign up with a dummy mail but make sure you remember your password!</small>
         <form onSubmit={this.handleSubmit} noValidate>
           <div className="form-group">
             <label htmlFor="username">Username</label>
@@ -201,9 +202,9 @@ class SignupForm extends Component {
               <Link
                 to="/login"
                 role="button"
-                className="btn btn-block btn-outline-primary"
+                className="btn btn-block btn-outline-primary my-btnn"
               >
-                Log In instead
+                or Log In
               </Link>
             </div>
           </div>

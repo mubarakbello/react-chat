@@ -12,16 +12,14 @@ class MessagesContainer extends Component {
   render() {
     const user = this.props.user
     return (
-      <div className="Messages-container">
-        <Switch>
-          <Route exact path="/messages" render={props => (
-            <RecentMessages user={user} {...props} />
-          )} />
-          <Route exact path="/messages/:friend_id" render={props => (
-            <MessageView user={user} friendId={props.match.params.friend_id} />
-          )} />
-        </Switch>
-      </div>
+      <Switch>
+        <Route exact path="/messages" render={props => (
+          <RecentMessages user={user} {...props} />
+        )} />
+        <Route exact path="/messages/:friend_id" render={props => (
+          <MessageView user={user} friendId={props.match.params.friend_id} />
+        )} />
+      </Switch>
     )
   }
 }

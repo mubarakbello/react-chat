@@ -62,11 +62,11 @@ class ActiveFollowers extends Component {
       }
     }
     return this.state.loading
-      ? <Loading text="Active followers" />
+      ? <div className="Active-followers"><Loading size="small"text="followers" /></div>
       : (
       <div className="Active-followers">
         <div className="recent-messages">
-          <NavLink to="/messages">Recent Messages</NavLink>
+          <NavLink exact to="/messages">Recent Messages</NavLink>
         </div>
         <div className="online">
           {FollowersListToRender}

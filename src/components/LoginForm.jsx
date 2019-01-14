@@ -108,9 +108,9 @@ class LoginForm extends Component {
               <Link
                 to="/signup"
                 role="button"
-                className="btn btn-block btn-outline-primary"
+                className="btn btn-block btn-outline-primary my-btnn"
               >
-                Sign Up instead
+                or Sign Up
               </Link>
             </div>
           </div>

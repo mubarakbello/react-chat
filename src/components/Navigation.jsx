@@ -7,7 +7,7 @@ class Navigation extends Component {
       <div className="Navigation">
         <div>
           <nav>
-            <NavLink to="/">Timeline</NavLink>
+            <NavLink exact to="/">Timeline</NavLink>
             <NavLink to="/messages">Messages</NavLink>
             <NavLink to="/followers">Followers</NavLink>
             <NavLink to="/profile">Profile</NavLink>
@@ -16,7 +16,7 @@ class Navigation extends Component {
         <div>
           <button
             onClick={this.props.handleLogout}
-            className="btn btn-danger"
+            className="btn btn-danger my-btnn"
           >Log out</button>
         </div>
       </div>
