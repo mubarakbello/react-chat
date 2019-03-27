@@ -18,7 +18,9 @@ the repo onto your local machine. If you prefer downloading the repo from github
 ## Getting Started
 
 You need nodejs and npm installed to run the app.
-Check Google if you'll need help doing this
+Also, you need to setup firebase auth and realtime database that the app depends on, and add the credentials to the ```src/config.js``` file.
+
+Check Google if you'll need help doing this.
 
 ## Installing Dependencies
 
